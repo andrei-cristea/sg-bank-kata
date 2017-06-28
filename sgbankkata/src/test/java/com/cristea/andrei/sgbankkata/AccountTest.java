@@ -1,5 +1,8 @@
 package com.cristea.andrei.sgbankkata;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import com.cristea.andrei.sgbankkata.entities.AccountStatement;
@@ -76,5 +79,25 @@ public class AccountTest {
 	statement = service.withdrawal(1.2);
 	Assert.assertEquals(1.2, statement.getAmount());
 	Assert.assertEquals(-1.3, statement.getBalance());
+    }
+
+    @Test
+    public void testHistoryEmpty() {
+	AccountService service = AccountFactory.getInstance().buildAccountService();
+	List<AccountStatement> statements = service.history();
+	Assert.assertEquals(0, statements.size());
+    }
+
+    @Test
+    public void testHistoryNotEmpty() {
+	AccountService service = AccountFactory.getInstance().buildAccountService();
+	List<AccountStatement> expectedStatements = new ArrayList<>();
+	expectedStatements.add(service.deposit(0.1));
+	expectedStatements.add(service.withdrawal(2));
+	expectedStatements.add(service.deposit(3));
+	expectedStatements.add(service.deposit(5.7));
+	expectedStatements.add(service.withdrawal(6.6));
+	List<AccountStatement> statements = service.history();
+	Assert.assertEquals(expectedStatements, statements);
     }
 }

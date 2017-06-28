@@ -10,7 +10,7 @@ import com.cristea.andrei.sgbankkata.enums.OperationTypeEnum;
  * 
  * @author andrei-cristea
  */
-public interface AccountStatement extends Serializable {
+public interface AccountStatement extends Serializable, Cloneable {
 
     /**
      * Get the operation type.
@@ -39,4 +39,12 @@ public interface AccountStatement extends Serializable {
      * @return a {@link double} value.
      */
     double getBalance();
+
+    /**
+     * Clone the object.
+     * 
+     * @return a new {@link AccountStatement}.
+     */
+    AccountStatement clone();
+
 }

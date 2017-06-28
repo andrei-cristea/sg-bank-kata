@@ -7,6 +7,8 @@ This library intentionally does not use a specific framework for the purpose of 
 ## Features
 
 * Deposit
+* Withdrawal
+* History
 
 ## Specifications
 
@@ -26,4 +28,4 @@ This library is written en Java 8.
 
 ### JAR
 
-[sgbankkata-1.0.0.jar](sg-bank-kata-1.0.0.jar)
+[sgbankkata-1.0.0.jar](sgbankkata-1.0.0.jar)

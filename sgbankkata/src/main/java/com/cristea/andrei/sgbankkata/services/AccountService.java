@@ -1,5 +1,7 @@
 package com.cristea.andrei.sgbankkata.services;
 
+import java.util.List;
+
 import com.cristea.andrei.sgbankkata.entities.AccountStatement;
 
 /**
@@ -13,8 +15,8 @@ public interface AccountService {
      * Deposit of an amount on the account.
      * 
      * @param pAmount
-     *            (> 0).
-     * @return A reference of the {@link AccountStatement} created.
+     *            The amount (greater than zero).
+     * @return A clone of the {@link AccountStatement} created.
      * @throws IllegalArgumentException
      *             if pAmount is less or equal to zero.
      */
@@ -24,10 +26,17 @@ public interface AccountService {
      * Withdrawal of an amount of the account.
      * 
      * @param pAmount
-     *            (> 0).
-     * @return A reference of the {@link AccountStatement} created.
+     *            The amount (greater than zero).
+     * @return A clone of the {@link AccountStatement} created.
      * @throws IllegalArgumentException
      *             if pAmount is less or equal to zero.
      */
     AccountStatement withdrawal(final double pAmount);
+
+    /**
+     * Get the history or an empty list if there's no history.
+     * 
+     * @return a list of clones not null.
+     */
+    List<AccountStatement> history();
 }

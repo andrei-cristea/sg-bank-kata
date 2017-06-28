@@ -3,6 +3,7 @@ package com.cristea.andrei.sgbankkata.services.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.cristea.andrei.sgbankkata.entities.AccountStatement;
 import com.cristea.andrei.sgbankkata.entities.impl.AccountStatementImpl;
@@ -17,7 +18,7 @@ import com.cristea.andrei.sgbankkata.services.AccountService;
 public class AccountServiceImpl implements AccountService {
 
     /** List of account statements */
-    private List<AccountStatement> accountStatements = new ArrayList<AccountStatement>();
+    private List<AccountStatement> accountStatements = new ArrayList<>();
 
     public AccountStatement deposit(final double pAmount) {
 
@@ -31,6 +32,11 @@ public class AccountServiceImpl implements AccountService {
 	return addStatement(-pAmount, OperationTypeEnum.WITHDRAWAL);
     }
 
+    public List<AccountStatement> history() {
+
+	return accountStatements.stream().map(e -> e.clone()).collect(Collectors.toList());
+    }
+
     /**
      * Check if amount is greater than zero.
      * 
@@ -40,6 +46,7 @@ public class AccountServiceImpl implements AccountService {
      *             if pAmount is less or equal to zero.
      */
     private void checkAmount(final double pAmount) {
+
 	if (pAmount <= 0) {
 	    throw new IllegalArgumentException("The amount must be greater than zero");
 	}
@@ -71,6 +78,6 @@ public class AccountServiceImpl implements AccountService {
 
 	accountStatements.add(result);
 
-	return result;
+	return result.clone();
     }
 }
