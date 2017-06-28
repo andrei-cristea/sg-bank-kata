@@ -43,4 +43,38 @@ public class AccountTest {
 	Assert.assertEquals(1.2, statement.getAmount());
 	Assert.assertEquals(1.3, statement.getBalance());
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithdrawalAmountZero() {
+	AccountService service = AccountFactory.getInstance().buildAccountService();
+	service.withdrawal(0);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testWithdrawalAmountNegative() {
+	AccountService service = AccountFactory.getInstance().buildAccountService();
+	service.withdrawal(-0.1);
+    }
+
+    @Test
+    public void testWithdrawal1Amount() {
+	AccountService service = AccountFactory.getInstance().buildAccountService();
+	AccountStatement statement = service.withdrawal(0.1);
+	Assert.assertNotNull(statement);
+	Assert.assertEquals(OperationTypeEnum.WITHDRAWAL, statement.getOperationType());
+	Assert.assertNotNull(statement.getDate());
+	Assert.assertEquals(0.1, statement.getAmount());
+	Assert.assertEquals(-0.1, statement.getBalance());
+    }
+
+    @Test
+    public void testWithdrawal2Amounts() {
+	AccountService service = AccountFactory.getInstance().buildAccountService();
+	AccountStatement statement = service.withdrawal(0.1);
+	Assert.assertEquals(0.1, statement.getAmount());
+	Assert.assertEquals(-0.1, statement.getBalance());
+	statement = service.withdrawal(1.2);
+	Assert.assertEquals(1.2, statement.getAmount());
+	Assert.assertEquals(-1.3, statement.getBalance());
+    }
 }

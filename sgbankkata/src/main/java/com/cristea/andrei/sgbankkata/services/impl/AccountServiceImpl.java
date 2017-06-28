@@ -21,9 +21,40 @@ public class AccountServiceImpl implements AccountService {
 
     public AccountStatement deposit(final double pAmount) {
 
+	checkAmount(pAmount);
+	return addStatement(pAmount, OperationTypeEnum.DEPOSIT);
+    }
+
+    public AccountStatement withdrawal(final double pAmount) {
+
+	checkAmount(pAmount);
+	return addStatement(-pAmount, OperationTypeEnum.WITHDRAWAL);
+    }
+
+    /**
+     * Check if amount is greater than zero.
+     * 
+     * @param pAmount
+     *            The amount to check.
+     * @throws IllegalArgumentException
+     *             if pAmount is less or equal to zero.
+     */
+    private void checkAmount(final double pAmount) {
 	if (pAmount <= 0) {
 	    throw new IllegalArgumentException("The amount must be greater than zero");
 	}
+    }
+
+    /**
+     * Add the positive or negative amount on the account.
+     * 
+     * @param pAmount
+     *            The amount.
+     * @param pOperationType
+     *            The operation type.
+     * @return A reference of the {@link AccountStatement} created.
+     */
+    private AccountStatement addStatement(final double pAmount, final OperationTypeEnum pOperationType) {
 
 	// Compute the balance
 	double balance = pAmount;
@@ -33,9 +64,9 @@ public class AccountServiceImpl implements AccountService {
 
 	// Build a new account statement
 	AccountStatementImpl result = new AccountStatementImpl();
-	result.setOperationType(OperationTypeEnum.DEPOSIT);
+	result.setOperationType(pOperationType);
 	result.setDate(LocalDateTime.now());
-	result.setAmount(pAmount);
+	result.setAmount(Math.abs(pAmount));
 	result.setBalance(balance);
 
 	accountStatements.add(result);

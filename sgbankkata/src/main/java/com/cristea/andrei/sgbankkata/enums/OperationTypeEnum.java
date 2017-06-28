@@ -6,5 +6,5 @@ package com.cristea.andrei.sgbankkata.enums;
  * @author andrei-cristea
  */
 public enum OperationTypeEnum {
-    DEPOSIT
+    DEPOSIT, WITHDRAWAL
 }
